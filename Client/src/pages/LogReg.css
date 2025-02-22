@@ -1,0 +1,75 @@
+/* LogReg.css */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0fdf4; /* Light greenish background */
+}
+  
+.auth-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+  
+.auth-form h2 {
+    margin-bottom: 1.5rem;
+    font-size: 24px;
+    color: #008f5d; /* Dark green for heading */
+}
+  
+.auth-form input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #00ffa2;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+  
+.auth-form input:focus {
+    outline: none;
+    border-color: #00ffa2;
+    box-shadow: 0 0 8px rgba(0, 255, 162, 0.5);
+}
+  
+.auth-form button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #00ffa2;
+    color: #004d32; /* Darker green for contrast */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+  
+.auth-form button:hover {
+    background-color: #00cc85;
+}
+  
+.auth-form p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #008f5d;
+}
+  
+.link-text {
+    color: #00ffa2;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+  
+.link-text:hover {
+    text-decoration: underline;
+    color: #00cc85;
+}
