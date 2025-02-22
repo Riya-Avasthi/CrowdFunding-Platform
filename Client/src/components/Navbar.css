@@ -1,0 +1,107 @@
+/* Navbar Styling */
+.container {
+    width: 100%;
+    
+    /* background: linear-gradient(135deg, #00ffae, #45f210); */
+    padding: 15px 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Logo Styling */
+.logo {
+    font-size: 26px;
+    font-weight: 600;
+    background-color: #00ffae;
+    color: #047e57;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+/* Navigation List */
+.nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav ul li {
+    color: #0b0b0b;
+    font-size: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.nav ul li:hover {
+    color: #047e57;
+    transform: translateY(-2px);
+}
+
+/* Buttons */
+.register, .login {
+    background: #047e57;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    height: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 2px solid #047e57;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.login {
+    margin-left: 10px;
+    background: transparent;
+    color: #047e57;
+    height: 13px;
+}
+
+.register:hover {
+    /* background: #00ffa6; */
+    /* color: #7cfbd7; */
+    transform: scale(1.1);
+}
+
+.login:hover {
+    background: #ffffff;
+    color: #047e57;
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav ul {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .nav ul li {
+        padding: 5px 0;
+    }
+
+    .register, .login {
+        margin-top: 10px;
+    }
+}
