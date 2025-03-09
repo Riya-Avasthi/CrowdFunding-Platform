@@ -6,58 +6,41 @@ const Campaign = () => {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedTiming, setSelectedTiming] = useState("All");
+  const [campaigns, setCampaigns] = useState([]);  // State for campaigns
+  const [loading, setLoading] = useState(true);  // Loading state
+  const [error, setError] = useState(null);  // Error handling
 
   const categories = ["All", "Technology", "Social Project", "Kids and Family"];
   const campaignTimings = ["All", "Launching", "Ongoing", "Ending Soon"];
 
-  const campaigns = [
-    {
-      id: 1,
-      title: "Team Red Cross",
-      description:
-        "The money raised will be dedicated to going towards helping people during their greatest time of need.",
-      category: "Social Project",
-      timing: "Ongoing",
-      goal: "500,000 USD",
-      progress: 70,
-      daysLeft: 45,
-      image: "https://source.unsplash.com/600x400/?helping,community",
-    },
-    {
-      id: 2,
-      title: "Tech for Education",
-      description:
-        "Raising funds to provide technology access to underprivileged students.",
-      category: "Technology",
-      timing: "Launching",
-      goal: "250,000 USD",
-      progress: 40,
-      daysLeft: 30,
-      image: "https://source.unsplash.com/600x400/?technology,education",
-    },
-    {
-      id: 3,
-      title: "Save the Kids",
-      description: "Help provide food and shelter to homeless children.",
-      category: "Kids and Family",
-      timing: "Ending Soon",
-      goal: "1,000,000 USD",
-      progress: 90,
-      daysLeft: 5,
-      image: "https://source.unsplash.com/600x400/?kids,care",
-    },
-    {
-      id: 4,
-      title: "StartUp Fund",
-      description: "Help Businesses to grow by funding",
-      category: "Businesses",
-      timing: "Launching",
-      goal: "25,000,000 USD",
-      progress: 90,
-      daysLeft: 5,
-      image: "https://source.unsplash.com/600x400/?kids,care",
-    },
-  ];
+  const navigate = useNavigate();
+  // Fetch campaigns from backend
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+          const response = await fetch("http://localhost:5000/api/campaigns/all", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+      });
+      
+ // Replace with your actual backend API URL
+        if (!response.ok) {
+          throw new Error("Failed to fetch campaigns");
+        }
+        const data = await response.json();
+        setCampaigns(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCampaigns();
+  }, []);
 
   // Filtering logic
   const filteredCampaigns = campaigns.filter((campaign) => {
@@ -69,7 +52,6 @@ const Campaign = () => {
     );
   });
 
-  const navigate = useNavigate();
   return (
     <>
     <Navbar/>
