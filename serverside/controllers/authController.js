@@ -8,9 +8,10 @@ const registerUser = async (req, res) => {
   const { name, email, password, role } = req.body;
 
   try {
-    // Validate role
-    if (!["fund_donor", "fund_raiser"].includes(role)) {
-      return res.status(400).json({ error: "Invalid role" });
+    // Validate role (ensure valid roles are accepted)
+    const validRoles = ["fund_donor", "fund_raiser"];
+    if (!validRoles.includes(role)) {
+      return res.status(400).json({ error: "Invalid role selected" });
     }
 
     // Check if user already exists
@@ -47,7 +48,11 @@ const loginUser = async (req, res) => {
     if (!isMatch) return res.status(400).json({ error: "Invalid email or password" });
 
     // Generate JWT Token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { id: user._id, role: user.role },  // Added role inside token payload
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     res.status(200).json({ message: "Login successful", token });
 
