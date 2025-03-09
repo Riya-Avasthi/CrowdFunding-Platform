@@ -1,29 +1,54 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./CreateCampaign.css";
-
+import axios from "axios";
 const CreateCampaign = () => {
   const [campaignData, setCampaignData] = useState({
-    name: "",
-    goals: "",
-    type: "FUNDRAISING",
-    amount: "",
+    title: "",
+    description: "",
+    goalAmount: "",
+    raisedAmount: "",
+    image: "",
     status: "PENDING",
     priority: "LOW",
     startDate: "",
     endDate: "",
-    description: "",
-    file:""
-  });
+    organizer: {
+      name: "",
+      location: "",
+      category: "",
+      profilePic: "",
+      link: "",
+    },
+});
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCampaignData({ ...campaignData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Campaign Created:", campaignData);
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Campaign Created:", campaignData);
+    try {
+      const response = await axios.post("http://localhost:5000/api/campaigns/create", campaignData, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`  // Assuming token is stored in localStorage
+        }
+    });
+    
+      console.log("Campaign Created:", response.data);
+      alert("Campaign successfully created!");
+    } catch (error) {
+      console.error("Error creating campaign:", error);
+      alert("Failed to create campaign.");
+    }
   };
 
   return (
@@ -234,25 +259,3 @@ const CreateCampaign = () => {
 };
 
 export default CreateCampaign;
-
-
-
-
-
-        // {/* Sidebar Navigation */}
-        // <div className="sidebar">
-        //   <div className="logo">LOGO</div>
-        //   <nav>
-        //     <ul>
-        //       <li>
-        //         <Link to="/home">🏠 Home</Link>
-        //       </li>
-        //       <li>
-        //         <Link to="/profile">👤 Profile</Link>
-        //       </li>
-        //       <li>
-        //         <Link to="/campaigns">📢 Campaigns</Link>
-        //       </li>
-        //     </ul>
-        //   </nav>
-        // </div>
