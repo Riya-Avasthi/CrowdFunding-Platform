@@ -1,3 +1,4 @@
+
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
 const dotenv = require("dotenv");
@@ -5,22 +6,32 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const authMiddleware = async (req, res, next) => {
-  const token = req.header("Authorization")?.split(" ")[1]; // Extract token after "Bearer"
-  if (!token) return res.status(401).json({ error: "Access denied: No token provided" });
+    const authHeader = req.header("Authorization");
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await User.findById(decoded.id);
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        console.error("❌ Token Error: Missing or Invalid Token Format");
+        return res.status(401).json({ error: "Access denied: No token provided" });
+    }
 
-    console.log("Authenticated User:", req.user); // Debugging Log
+    const token = authHeader.split(" ")[1];
 
-    if (!req.user) return res.status(401).json({ error: "Invalid token: User not found" });
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id);
 
-    next();
-  } catch (error) {
-    console.error("Token Verification Error:", error); // Log token errors
-    res.status(400).json({ error: "Invalid token" });
-  }
+        if (!user) {
+            console.error("❌ Token Error: User Not Found in Database");
+            return res.status(401).json({ error: "Invalid token: User not found" });
+        }
+
+        req.user = user;
+        console.log("✅ Authenticated User:", req.user);
+
+        next();
+    } catch (error) {
+        console.error("❌ Token Verification Error:", error.message);
+        res.status(403).json({ error: "Invalid token or token expired" });
+    }
 };
 
 module.exports = authMiddleware;
